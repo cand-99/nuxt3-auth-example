@@ -11,12 +11,16 @@
   },
   "devDependencies": {
     "@nuxt/devtools": "^1.0.0",
-    "@nuxt/ui": "^2.9.0",
     "@nuxtjs/eslint-config-typescript": "^12.1.0",
     "@nuxtjs/eslint-module": "^4.1.0",
+    "@sidebase/nuxt-auth": "0.6.0-rc.1",
     "eslint": "^8.52.0",
     "nuxt": "^3.8.0",
     "vue": "^3.3.7",
     "vue-router": "^4.2.5"
+  },
+  "dependencies": {
+    "@nuxt/ui": "^2.10.0",
+    "next-auth": "4.21.1"
   }
 }
