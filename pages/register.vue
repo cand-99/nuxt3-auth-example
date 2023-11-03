@@ -1,7 +1,5 @@
 <script lang="ts" setup>
-definePageMeta({
-  middleware: 'guest'
-})
+definePageMeta({ auth: false })
 
 </script>
 
