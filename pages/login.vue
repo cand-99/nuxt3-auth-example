@@ -1,6 +1,10 @@
 <script lang="ts" setup>
 definePageMeta({
-  middleware: 'guest'
+  auth: {
+    unauthenticatedOnly: true,
+    navigateAuthenticatedTo: '/login'
+  }
+
 })
 
 const form = ref({
