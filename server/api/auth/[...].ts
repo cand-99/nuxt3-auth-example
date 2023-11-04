@@ -1,10 +1,11 @@
 import CredentialsProvider from 'next-auth/providers/credentials'
 import GithubProvider from 'next-auth/providers/github'
+import GoogleProvider from 'next-auth/providers/google'
 import { NuxtAuthHandler } from '#auth'
+const config = useRuntimeConfig()
 
 export default NuxtAuthHandler({
-  secret: useRuntimeConfig().authSecret,
-
+  secret: config.authSecret,
   pages: {
     signIn: '/login'
   },
@@ -12,8 +13,13 @@ export default NuxtAuthHandler({
   providers: [
     // @ts-expect-error
     GithubProvider.default({
-      clientId: '3e784407d464565b7dde',
-      clientSecret: '49f1a5765ceb679c8ea26c0f058456a4edcd4a09'
+      clientId: config.GITHUB_CLIENT_ID,
+      clientSecret: config.GITHUB_CLIENT_SECRET
+    }),
+    // @ts-expect-error
+    GoogleProvider.default({
+      clientId: config.GOOGLE_CLIENT_ID,
+      clientSecret: config.GOOGLE_CLIENT_SECRET
     }),
     // @ts-expect-error
     CredentialsProvider.default({

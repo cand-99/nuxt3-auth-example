@@ -14,6 +14,8 @@ const form = ref({
 const toast = useToast()
 const { signIn } = useAuth()
 const isLoading = ref<boolean>(false)
+const isLoadingGithub = ref<boolean>(false)
+const isLoadingGoogle = ref<boolean>(false)
 
 const handleLogin = async (username: string, password: string) => {
   isLoading.value = true
@@ -31,6 +33,41 @@ const handleLogin = async (username: string, password: string) => {
     return navigateTo(url, { external: true })
   }
   isLoading.value = false
+}
+async function loginProviderGithub () {
+  isLoadingGithub.value = true
+  const { error, url } = await signIn('github', { redirect: false })
+  if (error) {
+    // Do your custom error handling here
+    toast.add({
+      title: 'Unauthorized',
+      description: 'Something went wrong',
+      icon: 'i-heroicons-exclamation-triangle',
+      color: 'red'
+    })
+    isLoadingGithub.value = false
+  } else {
+    // No error, continue with the sign in, e.g., by following the returned redirect:
+    return navigateTo(url, { external: true })
+  }
+}
+
+async function loginProviderGoogle () {
+  isLoadingGoogle.value = true
+  const { error, url } = await signIn('google', { redirect: false })
+  if (error) {
+    // Do your custom error handling here
+    toast.add({
+      title: 'Unauthorized',
+      description: 'Something went wrong',
+      icon: 'i-heroicons-exclamation-triangle',
+      color: 'red'
+    })
+    isLoadingGoogle.value = false
+  } else {
+    // No error, continue with the sign in, e.g., by following the returned redirect:
+    return navigateTo(url, { external: true })
+  }
 }
 </script>
 
@@ -58,7 +95,8 @@ const handleLogin = async (username: string, password: string) => {
         </UFormGroup>
 
         <UButton :loading="isLoading" type="submit" block label="Login" />
-        <UButton :loading="isLoading" type="button" block label="Github" @click="signIn('github')" />
+        <UButton :loading="isLoadingGithub" type="button" block label="Github" @click="loginProviderGithub()" />
+        <UButton :loading="isLoadingGoogle" type="button" block label="Google" @click="loginProviderGoogle()" />
       </form>
 
       <p class="mt-10 text-center text-sm text-gray-500">
