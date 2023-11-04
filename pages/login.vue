@@ -13,8 +13,10 @@ const form = ref({
 })
 const toast = useToast()
 const { signIn } = useAuth()
+const isLoading = ref<boolean>(false)
 
 const handleLogin = async (username: string, password: string) => {
+  isLoading.value = true
   const { error, url } = await signIn('credentials', { username, password, redirect: false })
   if (error) {
     // Do your custom error handling here
@@ -28,6 +30,7 @@ const handleLogin = async (username: string, password: string) => {
     // No error, continue with the sign in, e.g., by following the returned redirect:
     return navigateTo(url, { external: true })
   }
+  isLoading.value = false
 }
 </script>
 
@@ -54,7 +57,8 @@ const handleLogin = async (username: string, password: string) => {
           <UInput v-model="form.password" type="password" icon="i-heroicons-lock-closed" />
         </UFormGroup>
 
-        <UButton type="submit" block label="Login" />
+        <UButton :loading="isLoading" type="submit" block label="Login" />
+        <UButton :loading="isLoading" type="button" block label="Github" @click="signIn('github')" />
       </form>
 
       <p class="mt-10 text-center text-sm text-gray-500">

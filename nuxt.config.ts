@@ -16,5 +16,8 @@ export default defineNuxtConfig({
     provider: {
       type: 'authjs'
     }
+  },
+  colorMode: {
+    preference: 'light'
   }
 })

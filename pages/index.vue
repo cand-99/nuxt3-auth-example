@@ -5,9 +5,11 @@ const {
   data,
   signOut
 } = useAuth()
-
+const isLoading = ref<boolean>(false)
 async function handleLogout () {
+  isLoading.value = true
   await signOut()
+  isLoading.value = false
 }
 </script>
 
@@ -19,7 +21,7 @@ async function handleLogout () {
       {{ data }}
     </pre>
 
-    <UButton @click="handleLogout">
+    <UButton :loading="isLoading" @click="handleLogout">
       Logout
     </UButton>
   </div>
